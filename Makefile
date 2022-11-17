@@ -9,6 +9,8 @@ SRCS	=	src/main.c		\
 			src/routine.c	\
 			src/init.c		\
 			src/utils.c		\
+			src/check.c		\
+			src/display.c
 
 OBJS	= ${SRCS:.c=.o}
 
