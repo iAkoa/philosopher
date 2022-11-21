@@ -10,8 +10,9 @@ SRCS	=	src/main.c		\
 			src/init.c		\
 			src/utils.c		\
 			src/check.c		\
-			src/display.c
-
+			src/display.c	\
+			src/clean.c
+	
 OBJS	= ${SRCS:.c=.o}
 
 CC		= gcc
@@ -21,7 +22,7 @@ CFLAGS    = -Wall -Wextra -Werror
 %o : %c ${HEADER} Makefile
 		${CC} ${CFLAGS} -c $< -o $@
 
-${NAME}:	${OBJS}
+${NAME}:	${OBJS} Makefile
 			${CC} ${CFLAGS} -o ${NAME} ${OBJS}
 
 all:    ${NAME}

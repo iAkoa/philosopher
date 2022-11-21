@@ -6,31 +6,37 @@
 /*   By: pat <pat@student.42lyon.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 03:25:54 by pat               #+#    #+#             */
-/*   Updated: 2022/11/16 08:37:21 by pat              ###   ########lyon.fr   */
+/*   Updated: 2022/11/21 05:34:02 by pat              ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosopher.h"
 
-void display(t_philo *philo, char *arg)
+int	display(t_philo *philo, char *arg)
 {
-	printf("%i ", timer(philo) - philo->data->time_ref);
-	printf("%i ", philo->id);
-	printf("%s\n", arg);
+	if (check_death(philo))
+		return (0);
+	printf("%i %i %s\n", get_time() - philo->time_ref, philo->id, arg);
+	return (1);
 }
 
-int get_time(t_philo *philo)
+int	get_time(void)
 {
-	struct timeval current_time;
+	struct timeval	current_time;
+
 	gettimeofday(&current_time, NULL);
-	philo->time_start = current_time.tv_sec * 1000 + current_time.tv_usec/ 1000;
-	return(1);
+	return (current_time.tv_sec * 1000 + current_time.tv_usec / 1000);
 }
 
-// struct timeval time_end(struct timeval time_start, t_philo *philo)
-// {
-// 	struct timeval current_time;
-// 	gettimeofday(&current_time, NULL);
-// 	philo->time_start = current_time.tv_sec;
-// 	return (current_time);
-// }
+void	ft_usleep(int time, t_philo *philo)
+{
+	int	start;
+
+	start = get_time();
+	while (get_time() - start < time)
+	{
+		if (check_death(philo))
+			return ;
+		usleep(500);
+	}
+}
